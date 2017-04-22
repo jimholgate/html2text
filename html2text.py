@@ -3,7 +3,7 @@
 __version__ = "3.200.3"
 __author__ = "Aaron Swartz (me@aaronsw.com)"
 __copyright__ = "(C) 2004-2008 Aaron Swartz. GNU GPL 3."
-__contributors__ = ["Martin 'Joey' Schulze", "Ricardo Reyes", "Kevin Jay North"]
+__contributors__ = ["Martin 'Joey' Schulze", "Ricardo Reyes", "Kevin Jay North","James Holgate"]
 
 # TODO:
 #   Support decoded entities with unifiable.
@@ -265,7 +265,10 @@ class HTML2Text(HTMLParser.HTMLParser):
 
         self.outtext = self.outtext.join(self.outtextlist)
         if self.unicode_snob:
-            nbsp = unichr(name2cp('nbsp'))
+            try:
+                nbsp = unichr(name2cp('nbsp'))
+            except NameError:
+                nbsp = chr(name2cp('nbsp'))
         else:
             nbsp = u' '
         self.outtext = self.outtext.replace(u'&nbsp_place_holder;', nbsp)
