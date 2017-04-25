@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """html2text: Turn HTML into equivalent Markdown-structured text."""
-__version__ = "3.200.4"
+__version__ = "3.200.5"
 __author__ = "Aaron Swartz (me@aaronsw.com)"
 __copyright__ = "(C) 2004-2008 Aaron Swartz. GNU GPL 3."
 __contributors__ = ["Martin 'Joey' Schulze", "Ricardo Reyes", "Kevin Jay North", "James Holgate"]
@@ -607,8 +607,13 @@ class HTML2Text(HTMLParser.HTMLParser):
                 if not self.list:
                     bq += "    "
                 #else: list content is already partially indented
-                for i in xrange(len(self.list)):
-                    bq += "    "
+                try:
+                    for i in xrange(len(self.list)):
+                        bq += "    "
+                except NameError:
+                    for i in range(len(self.list)):
+                        bq += "    "
+    
                 data = data.replace("\n", "\n"+bq)
 
             if self.startpre:
